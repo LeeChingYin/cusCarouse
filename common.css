@@ -1,0 +1,49 @@
+  body{
+    overflow: hidden;
+  }
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  nav{
+    min-height: 70px;
+  }
+  .cycle-slide{
+    position: relative;
+    overflow: hidden;
+  }
+  .cycle-slide img{
+    position: absolute;
+    top: 0;
+    left:0;
+  }
+  .prev-button {
+    position: fixed;
+    z-index: 500;
+    top: 50%;
+    left: 10%;
+    width: 35px;
+    height: 70px;
+    margin-top: -35px;
+    background: url(./images/btn-prev.png) center top no-repeat;
+    cursor: pointer;
+}
+  .next-button {
+    position: fixed;
+    z-index: 500;
+    top: 50%;
+    right: 10%;
+    width: 35px;
+    height: 70px;
+    margin-top: -35px;
+    background: url(./images/btn-next.png) center top no-repeat;
+    cursor: pointer;
+}
+.cycle-slide{
+  opacity: 0;
+  display: none;
+}
+.cycle-slide-active{
+  // opacity: 1;
+  // display: block;
+}
