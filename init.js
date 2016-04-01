@@ -1,4 +1,5 @@
 var _w = $(window),
+	baseHtmlFontSize = 50,
 	navHeight = $('nav').height(),
 	originalWidth, originalHeight,
 	_this = $('.cycle-slideshow > div > img'),
@@ -13,7 +14,8 @@ var _w = $(window),
 windowProperties.width = _w.width();
 windowProperties.height = _w.height();
 
-img.src = $('.cycle-slideshow > div > img').attr('src');
+if (_this.length > 0)
+    img.src = _this.attr('src');
 
 /**
  * [isimgHeightHigher 判断需要设定图片的高度是否大于或等于窗口的高度,分别调用imgHeightHigher(), imgHeightShorter()控制图片的位置
@@ -143,7 +145,7 @@ img.onload = function() {
 		}
 
 	}
-	imgSetProperties = null, windowProperties = null;
+	imgSetProperties = null;
 };
 
 $(window).resize(function() {
@@ -178,18 +180,92 @@ $(window).resize(function() {
 	imgSetProperties = null, windowProperties = null;
 });
 
-//
-$("#section1").css("height", windowProperties.height);
-$(".prev-button").css("top",(windowProperties.height+70)/2);
-$(".next-button").css("top",(windowProperties.height+70)/2);
-$(".cycle-content-title").css("top",(windowProperties.height-70)/2);
+
+
+
+/**
+ * [控制cycle-show字体垂直居中]
+ * @param  {number} baseFontSize - html font-size;
+ * @param  {number} fontHeight - cycle-show 字体大小(高度);
+ * @param {number} outContainer - cycle-show 字体div高度;
+ * @param {number} space - cycle-show cycle-show 字体间距;
+ * @param {number} midline - cycle-show 字体div的中线位置;
+ * @param {number} outContainerTop - cycle-show 字体div的top位置（垂直居中）;
+ */
+var cycleShowVerticalMiddle = function(windowObj) {
+	var navHg = caculateNavHeight(windowObj);
+	    baseFontSize = windowObj.width / 320 * baseHtmlFontSize,
+		fontHeight = baseFontSize * .3,
+		outContainer = fontHeight * 1.42857143,
+		space = (outContainer - fontHeight) / 2,
+		midline = (windowObj.height - navHg - outContainer) / 2,
+		outContainerTop = midline - fontHeight / 2;
+	$(".cycle-content-title").css("top", midline);
+
+	navHg = null, baseFontSize = null, fontHeight = null, outContainer = null, space = null, midline = null, outContainerTop = null;
+}
+
+/**
+ * [计算导航高度]
+ * @param  {[type]} windowObj [description]
+ * @return {[type]}           [description]
+ */
+var caculateNavHeight = function(windowObj){
+	var navHeight, baseFontSize;
+	// console.log(window.innerWidth);
+	if(window.innerWidth>=992){
+		navHeight = 70;
+	}else{
+		baseFontSize = windowObj.width / 320 * baseHtmlFontSize;
+		navHeight = 70/baseHtmlFontSize * baseFontSize;
+	}
+	return navHeight;
+}
+
+var optionsSetting = function(windowObj) {
+	navHg = caculateNavHeight(windowObj);
+	cycleShowVerticalMiddle(windowObj,navHg);
+	var imgLogo = new Image();
+	imgLogo.src = $(".navbar-logo img").attr("src");
+	imgLogo.onload = function() {
+		console.log(navHg);
+		$(".banner-sildeshow").css("top", navHg);
+	}
+
+	$("#section1").css("height", windowObj.height);
+	$(".prev-button").css("top", (windowObj.height - 70) / 2 + navHg);
+	$(".next-button").css("top", (windowObj.height - 70) / 2 + navHg);
+	$(".mobile-navbar-collapse").css("height", windowObj.height-navHg);
+}
+
+
+optionsSetting(windowProperties,navHeight);
+
 $(window).resize(function() {
 	var windowProperties = new Object();
+	windowProperties.width = _w.width();
 	windowProperties.height = _w.height();
-	$("#section1").css("height", windowProperties.height);
-	$(".prev-button").css("top",(windowProperties.height+70)/2);
-	$(".next-button").css("top",(windowProperties.height+70)/2);
-	$(".cycle-content-title").css("top",(windowProperties.height-70)/2);
+	// var baseFontSize = windowProperties.width / 320 * baseHtmlFontSize,
+	// 	navHeight = 70 * windowProperties.width / 320;
+	// 	console.log(navHeight+"aa");
+
+	// navHeight = $('nav').height();
+	// $(".banner-sildeshow").css("top", navHeight);
+
+	optionsSetting(windowProperties,navHeight);
+	console
+	$(".banner-sildeshow").css("top", navHeight);
+
 	windowProperties = null;
 });
+
+
+
+
+
+
+
+
+
+
 

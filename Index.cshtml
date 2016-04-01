@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@model HomeVM
+@using EG.Website.EIHLSite.HtmlHelpers
+
+@{
+    string liClass = string.Empty;
+    string active = string.Empty;    
+}
+    @*<div class="banner-sildeshow">
+        <div class="cycle-slideshow" data-cycle-swipe="true" data-cycle-timeout="4500" data-cycle-slides=">
+            div" data-cycle-prev=".prev-button" data-cycle-next=".next-button" data-cycle-fx="fade" data-cycle-manual-speed="1000">
+            @foreach (var slideImg in Model.SlideImageLinks)
+            {               
+            <div>
+                <img src="@slideImg.ImgLink">
+                 @if (!string.IsNullOrEmpty(slideImg.Slogan))
+                            {
+                <div class="cycle-content-title">
+                    @slideImg.Slogan
+                </div>
+                }
+            </div>
+
+}
+        </div>
+        <div class="prev-button"></div>
+        <div class="next-button"></div>
+    </div>
+    <div class="section1" id="section1"></div>
+    <div class="section2"  id="section2">
+    <div class="container">*@
+
+@if (ConfigHelper.ISPCTABDEVIDE)
+ {
+<div class="main-businessPos">
+    @foreach (var splitImg in Model.SplitImageLinks)
+    {
+    <a data-toggle="modal" data-target="#Modal">
+        <img src="@splitImg.ImgLink" alt="" class="img-responsive">
+        <div class="main-businessPos_playerBtn"></div>
+    </a>
+    <div id="Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <button type="button" class="close modal-close">×</button>
+        <div id="jp_container_1" class="jp-video jp-video-360p">
+            <!--该容器将放置我们的视频-->
+            <div id="advertVideoPlayer" class="jp-jplayer" advertVideoPlayer="@splitImg.VideoLink"></div>
+
+            <!--控制按钮-->
+            <div class="jp-gui">
+                <div class="jp-interface">
+                    <div class="jp-controls-holder">
+                        <!--播放和暂停按钮-->
+                        <div class="jp-controls">
+                            <a href="javascript:;" class="jp-play" tabindex="1">play</a>
+                            <a href="javascript:;" class="jp-pause" tabindex="1">pause</a>
+                            <span class="separator sep-1"></span>
+                        </div>
+                        <!--时间通知-->
+                        <div class="jp-time">
+                            <div class="jp-current-time"></div>
+                            <span class="time-sep">/</span>
+                            <div class="jp-duration"></div>
+                            <span class="separator sep-2"></span>
+                        </div>
+                        <!--进度条-->
+                        <div class="jp-progress">
+                            <div class="jp-seek-bar">
+                                <div class="jp-play-bar">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--是否静音-->
+                        <div class="jp-volume-controls">
+                            <a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a>
+                            <a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a>
+                        </div>
+                        <!--音量条-->
+                        <div class="jp-volume-bar">
+                            <div class="jp-volume-bar-value">
+                                <span class="handle"></span>
+                            </div>
+                        </div>
+                        <span class="separator sep-2"></span>
+                        <!--全屏切换-->
+                        <!--<div class="jp-toggles">
+                        <a href="javascript:;" class="jp-full-screen" tabindex="0" title="full screen">full screen</a>
+                        <a href="javascript:;" class="jp-full-screen jp-restore-screen" tabindex="0" title="restore screen">restore screen</a>
+                    </div>
+                    !-->
+                </div>
+                <!--end jp-controls-holder--> </div>
+            <!--end jp-interface--> </div>
+        <!--end jp-gui-->
+        <div class="jp-no-solution">如果不支持的视频。可以使用Flash替代。</div>
+    </div>
+</div>
+<div class="modal-backdrop modal-bdp-hide animated fadeIn"></div>
+}
+</div>
+}else{
+<!-- mobile player layer -->
+<div class="main-businessPos">
+@foreach (var splitImg in Model.SplitImageLinks)
+    {
+<a href="@splitImg.VideoLink">
+    <img src="@splitImg.ImgLink" alt="" class="img-responsive">
+    <div class="main-businessPos_playerBtn"></div>
+</a>
+}
+</div>
+}
+
+<!-- mobile ad layer -->
+<div class="main-business">
+@foreach (var verticalImg in Model.VerticalImageLinks)
+    {
+<div class="main-business_item">
+    <a class="main-business_itemLink" href="@verticalImg.PageLink">
+        @if (!string.IsNullOrEmpty(verticalImg.Name))
+                {
+        <p class="cus-lb-itemTitle main-business_itemTitle">@verticalImg.Name</p>
+        }
+        <img src="@verticalImg.ImgLink" alt="" class="img-responsive"></a>
+</div>
+}
+</div>
+
+@if (ConfigHelper.ISPCTABDEVIDE){
+<div class="container main_new_border">
+<div class="main_new clearfix">
+    <div class="main_new-item">
+        <img class="main_new_title" src="@Model.Contents[0]" alt="">
+        <ul class="main_new-ul clearfix">
+            @foreach (var importantNews in Model.ImportantNews)
+                {
+                    if (importantNews.Equals(Model.ImportantNews[Model.ImportantNews.Count - 1]))
+                    {
+                        liClass = string.Empty;
+                    }
+                    else
+                    {
+                        liClass = "margin-bottom-40";
+                    }
+            <li class="@liClass main-item-border clearfix">
+                <div class="new-date">@DateHelper.PeriodSplitDateFormat(importantNews.Date)</div>
+                <div class="new-title f-item-content n-tw-574">
+                    <a href="@importantNews.FileLink" target="_blank">@importantNews.Title</a>
+                </div>
+            </li>
+            }
+        </ul>
+    </div>
+    <div class="main_new-item new-item-right">
+        <a href="@Model.Contents[2]">@Html.IsShowImage(Model.Contents[1], "new-icon-more")</a>
+    </div>
+</div>
+</div>
+}else{
+<div class="main-news">
+<div class="main-news_title clearfix">
+    <div class="main-news_titleText"></div>
+    <div class="main-news_more">
+        <a href="@Model.Contents[2]"></a>
+    </div>
+</div>
+<div class="main-news_content">
+    <ul class="clearfix">
+        @foreach (var importantNews in Model.ImportantNews)
+    {
+        <li class="main-news_item">
+            <div class="main-news_itemDate">@DateHelper.PeriodSplitDateFormat(importantNews.Date)</div>
+            <div class="main-news_itemTitle">
+                <a href="@importantNews.FileLink" target="_blank">@importantNews.Title</a>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
+</div>
+}
+@*</div>
+</div>*@
+<script src="@Url.Content("/build/app.js")"></script>

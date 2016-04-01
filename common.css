@@ -1,23 +1,34 @@
-  body{
-    overflow: hidden;
-  }
-  *{
+// body {
+//     overflow: hidden;
+// }
+* {
     padding: 0;
     margin: 0;
-  }
-  nav{
+}
+.header-wapper{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+}
+nav {
     min-height: 70px;
-  }
-  .cycle-slide{
+    position: relative;
+}
+.banner-sildeshow{
+    position: fixed;
+    top:70px;
+}
+.cycle-slide {
     position: relative;
     overflow: hidden;
-  }
-  .cycle-slide img{
+}
+.cycle-slide img {
     position: absolute;
     top: 0;
-    left:0;
-  }
-  .prev-button {
+    left: 0;
+}
+.prev-button {
     position: fixed;
     z-index: 500;
     top: 50%;
@@ -28,7 +39,7 @@
     background: url(./images/btn-prev.png) center top no-repeat;
     cursor: pointer;
 }
-  .next-button {
+.next-button {
     position: fixed;
     z-index: 500;
     top: 50%;
@@ -39,11 +50,19 @@
     background: url(./images/btn-next.png) center top no-repeat;
     cursor: pointer;
 }
-.cycle-slide{
-  opacity: 0;
-  display: none;
+.cycle-content-title{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+    line-height: 0;
+    text-shadow: 1px 3px 5px #000;
 }
-.cycle-slide-active{
-  // opacity: 1;
-  // display: block;
+.section2{
+    position: relative;
+    z-index: 999;
+    height: 1200px;
+    background: #e8e8e8;
+   
 }
